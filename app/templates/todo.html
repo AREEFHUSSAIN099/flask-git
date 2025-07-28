@@ -1,11 +1,11 @@
-<!-- templates/todo.html -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>To-Do Form</title>
 </head>
 <body>
-    <h2>Add To-Do Item</h2>
+    <h2>To-Do Item Submission</h2>
+
     <form action="/submittodoitem" method="post">
         <label>Item ID:</label><br>
         <input type="text" name="itemId" required><br><br>
@@ -18,6 +18,13 @@
 
         <label>Due Date:</label><br>
         <input type="date" name="dueDate"><br><br>
+
+        <label>Priority:</label><br>
+        <select name="priority">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select><br><br>
 
         <button type="submit">Submit</button>
     </form>
