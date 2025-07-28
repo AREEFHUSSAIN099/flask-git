@@ -5,17 +5,17 @@ import os
 
 app = Flask(__name__)
 
-# Connect to MongoDB Atlas
-client = MongoClient("mongodb+srv://areefhussain099:38013801areef@cluster099.ny6vqpr.mongodb.net/")
+# ✅ MongoDB connection
+client = MongoClient("mongodb+srv://areefhussain099:301301areef@cluster099.ny6vqpr.mongodb.net/")
 db = client["flask_db"]
 collection = db["users"]
+todo_collection = db["todo_items"]
 
-# Route to show form
+# ✅ Home route - user form
 @app.route('/')
 def index():
     return render_template('form.html')
 
-# Route to handle form submission
 @app.route('/submit', methods=['POST'])
 def submit():
     name = request.form['name']
@@ -23,7 +23,7 @@ def submit():
     collection.insert_one({"name": name, "email": email})
     return f"✅ Data submitted successfully! Name: {name}, Email: {email}"
 
-# Route to return JSON data from data.json
+# ✅ Route to return JSON data
 @app.route('/jsondata')
 def json_data():
     json_path = os.path.join(os.path.dirname(__file__), 'data.json')
@@ -31,5 +31,25 @@ def json_data():
         data = json.load(f)
     return data
 
+# ✅ To-Do Form route
+@app.route('/todo')
+def todo():
+    return render_template('todo.html')
+
+# ✅ To-Do form submission route
+@app.route('/submittodoitem', methods=['POST'])
+def submit_todo_item():
+    item_name = request.form['itemName']
+    item_description = request.form['itemDescription']
+    item_id = request.form['itemId']
+
+    todo_collection.insert_one({
+        "item_id": item_id,
+        "item_name": item_name,
+        "item_description": item_description
+    })
+    return f"✅ To-Do Item submitted! ID: {item_id}, Name: {item_name}, Description: {item_description}"
+
+# ✅ Run the app
 if __name__ == '__main__':
     app.run(debug=True)
