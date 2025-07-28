@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do Form</title>
+</head>
+<body>
+    <h2>To-Do Item Submission</h2>
+
+    <form action="/submittodoitem" method="post">
+        <label>Item ID:</label><br>
+        <input type="text" name="itemId" required><br><br>
+
+        <label>Item Name:</label><br>
+        <input type="text" name="itemName" required><br><br>
+
+        <label>Item Description:</label><br>
+        <textarea name="itemDescription" required></textarea><br><br>
+
+        <label>Due Date:</label><br>
+        <input type="date" name="dueDate"><br><br>
+
+        <label>Priority:</label><br>
+        <select name="priority">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
