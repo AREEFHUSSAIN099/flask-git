@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do Items</title>
+</head>
+<body>
+    <h2>📝 Submitted To-Do Items</h2>
+
+    {% if todos %}
+        <ul>
+            {% for todo in todos %}
+                <li>
+                    <strong>ID:</strong> {{ todo.id }}<br>
+                    <strong>Title:</strong> {{ todo.title }}<br>
+                    <strong>Description:</strong> {{ todo.description }}<br>
+                    <strong>Category:</strong> {{ todo.category }}<br>
+                    <strong>Hash:</strong> {{ todo.hash }}<br>
+                    <hr>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No To-Do items found.</p>
+    {% endif %}
+</body>
+</html>
