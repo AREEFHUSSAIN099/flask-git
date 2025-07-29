@@ -8,7 +8,7 @@ import json
 app = Flask(__name__)
 
 # ✅ MongoDB connection
-client = MongoClient("mongodb+srv://areefhussain099:38013801areef@cluster099.ny6vqpr.mongodb.net/")
+client = MongoClient("mongodb+srv://areefhussain099:3838areef@cluster099.ny6vqpr.mongodb.net/")
 db = client["flask_db"]
 collection = db["users"]
 todo_collection = db["todo_items"]
