@@ -1,2 +1,2 @@
-# flask-git
+# Git And github
 ## Assignment
