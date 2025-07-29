@@ -1,17 +1,32 @@
-<!-- todo.html -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>To-Do Form</title>
+    <title>To-Do Item Form</title>
 </head>
 <body>
-    <h2>Add To-Do Item</h2>
+    <h2>Submit a To-Do Item</h2>
     <form action="/submittodoitem" method="post">
-        <label>Item Name:</label><br>
+        <label>Item ID:</label>
+        <input type="text" name="itemId" required><br><br>
+
+        <label>Item Name:</label>
         <input type="text" name="itemName" required><br><br>
 
-        <label>Item Description:</label><br>
-        <textarea name="itemDescription" required></textarea><br><br>
+        <label>Item Description:</label>
+        <input type="text" name="itemDescription" required><br><br>
+
+        <label>Due Date:</label>
+        <input type="date" name="dueDate" required><br><br>
+
+        <label>Priority:</label>
+        <select name="priority" required>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select><br><br>
+
+        <label>Category:</label>
+        <input type="text" name="category"><br><br>
 
         <button type="submit">Submit</button>
     </form>

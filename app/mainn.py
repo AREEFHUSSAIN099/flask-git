@@ -1,87 +1,47 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from pymongo import MongoClient
-import json
-import os
 import uuid
-import hashlib
+import hashlib  # ✅ NEW import
 
 app = Flask(__name__)
 
 # ✅ MongoDB connection
-client = MongoClient("mongodb+srv://areefhussain099:38013801areef@cluster099.ny6vqpr.mongodb.net/")
+client = MongoClient("mongodb+srv://areefhussain099:3838areef@cluster099.ny6vqpr.mongodb.net/")
 db = client["flask_db"]
-collection = db["users"]
-todo_collection = db["todo_items"]
+todos_collection = db["todos"]
 
-
-# ✅ Route for Name & Email form
 @app.route('/')
-def index():
-    return render_template('form.html')
-
-
-@app.route('/submit', methods=['POST'])
-def submit():
-    name = request.form['name']
-    email = request.form['email']
-    collection.insert_one({"name": name, "email": email})
-    return f"✅ Data submitted successfully! Name: {name}, Email: {email}"
-
-
-# ✅ JSON route from file
-@app.route('/jsondata')
-def json_data():
-    json_path = os.path.join(os.path.dirname(__file__), 'data.json')
-    with open(json_path) as f:
-        data = json.load(f)
-    return data
-
-
-# ✅ To-Do Form route
-@app.route('/todo')
-def todo():
+@app.route('/todo')  # ✅ Added /todo route
+def todo_form():
     return render_template('todo.html')
 
-
-# ✅ To-Do submission with UUID, Hash, optional Category
-@app.route('/submittodoitem', methods=['POST'])
+@app.route('/submit', methods=['POST'])
 def submit_todo_item():
-    item_id = request.form['itemId']
-    item_name = request.form['itemName']
-    item_description = request.form['itemDescription']
-    due_date = request.form['dueDate']
-    priority = request.form['priority']
+    title = request.form['title']
+    description = request.form['description']
+    category = request.form['category']
 
-    # ✅ optional field - avoids KeyError
-    category = request.form.get('category', 'Not Specified')
+    todo_id = str(uuid.uuid4())
 
-    item_uuid = str(uuid.uuid4())
-    hash_input = item_id + item_name
-    item_hash = hashlib.sha256(hash_input.encode()).hexdigest()
+    # ✅ NEW: Generate hash from title + description
+    hash_input = title + description
+    todo_hash = hashlib.sha256(hash_input.encode()).hexdigest()
 
-    todo_collection.insert_one({
-        "item_id": item_id,
-        "item_name": item_name,
-        "item_description": item_description,
-        "due_date": due_date,
-        "priority": priority,
-        "category": category,
-        "item_uuid": item_uuid,
-        "item_hash": item_hash
-    })
+    todo_item = {
+        'id': todo_id,
+        'title': title,
+        'description': description,
+        'category': category,
+        'hash': todo_hash  # ✅ NEW field
+    }
 
-    return f"""
-    ✅ To-Do Item Submitted!<br>
-    ID: {item_id}<br>
-    UUID: {item_uuid}<br>
-    Hash: {item_hash}<br>
-    Name: {item_name}<br>
-    Description: {item_description}<br>
-    Due Date: {due_date}<br>
-    Priority: {priority}<br>
-    Category: {category}
-    """
+    todos_collection.insert_one(todo_item)
+    return redirect('/displaytodos')
 
+@app.route('/displaytodos')
+def display_todos():
+    todos = list(todos_collection.find())
+    return render_template('displaytodos.html', todos=todos)
 
 if __name__ == '__main__':
     app.run(debug=True)
