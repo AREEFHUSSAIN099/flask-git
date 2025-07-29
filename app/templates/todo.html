@@ -4,29 +4,25 @@
     <title>To-Do Form</title>
 </head>
 <body>
-    <h2>To-Do Item Submission</h2>
+    <h2>To-Do Submission Form</h2>
 
-    <form action="/submittodoitem" method="post">
-        <label>Item ID:</label><br>
-        <input type="text" name="itemId" required><br><br>
+    <form action="/addtodo" method="POST">
+        <label>Name:</label>
+        <input type="text" name="name" required><br><br>
 
-        <label>Item Name:</label><br>
-        <input type="text" name="itemName" required><br><br>
+        <label>Email:</label>
+        <input type="email" name="email" required><br><br>
 
-        <label>Item Description:</label><br>
-        <textarea name="itemDescription" required></textarea><br><br>
+        <label>Item ID:</label>
+        <input type="text" name="item_id"><br><br>
 
-        <label>Due Date:</label><br>
-        <input type="date" name="dueDate"><br><br>
+        <label>UUID:</label>
+        <input type="text" name="uuid"><br><br>
 
-        <label>Priority:</label><br>
-        <select name="priority">
-            <option value="Low">Low</option>
-            <option value="Medium">Medium</option>
-            <option value="High">High</option>
-        </select><br><br>
+        <label>Hash:</label>
+        <input type="text" name="hash"><br><br>
 
-        <button type="submit">Submit</button>
+        <input type="submit" value="Submit">
     </form>
 </body>
 </html>
